@@ -1,7 +1,6 @@
 import './App.css';
 
 export function GruppenBeschreibung(props) {
-  const {data} = props;
 
   return (<div>
       <h1>Gruppenbeschreibung</h1>

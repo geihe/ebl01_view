@@ -4,6 +4,9 @@ import {GruppenBeschreibung} from "./GruppenBeschreibung";
 import {Statistics} from "./Statistics";
 import {Zeiten} from "./Zeiten";
 import {SingleResults} from "./SingeResult/SingleResults";
+import {Feedback} from "./Feedback";
+import {test} from "./test";
+import {Rows} from "./Rows";
 
 export function App() {
   const baseURL = 'https://beispielbasiertes-lernen.de/rest/EBL/';
@@ -17,21 +20,23 @@ export function App() {
 
   const [data, setData] = useState([]);
   const meta = data[0];
-  const complete =
-    data.filter(d => d.end)
-      .sort((a, b) => new Date(a.start) - new Date(b.start))
-      .map((c, index) => ({...c, nr: index + 1}));
+  const rows = new Rows(data);
+  const complete = rows.complete().sortDate().addNr().rows;
 
+  test(data);
 
   return (
     <>
-      <SingleResults complete={complete}/>
       <GruppenBeschreibung/>
+      <Feedback data={complete}/>
       <Statistics data={data}/>
       <h2>Zeiten der abgeschlossenen Experimente</h2>
       <Zeiten data={complete}/>
+      <hr/>
+      <SingleResults complete={complete}/>
+      <hr/>
       <h2>Zeiten der begonnenen Experimente</h2>
-      <Zeiten data={data.filter(d => !d.end)}/>
+      <Zeiten data={data}/>
     </>
   );
 }

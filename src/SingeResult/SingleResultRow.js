@@ -1,12 +1,12 @@
 import {PreTest} from "./PreTest";
 import {IntroductionTest} from "./IntroductionTest";
 import {SectionTimeList} from "./SectionTimes";
+import {CognitiveLoad} from "./CognitiveLoad";
+import {PostTestAutoSum} from "../PostTestAutoSum";
 
 export function SingleResultRow(props) {
   const {data} = props;
-  const row = JSON.parse(data.data);
-  console.log(row);
-
+  const row = data.data;
 
   return (
     <tr>
@@ -17,6 +17,13 @@ export function SingleResultRow(props) {
       <IntroductionTest row={row}/>
       <td>Pretest:</td>
       <PreTest row={row}/>
+      <td>cognitive load</td>
+      <CognitiveLoad row={row} />
+      <td>post tests sum</td>
+      <PostTestAutoSum row={row} />
+      {/*<td>post tests</td>*/}
+      {/*<PostTestAuto row={row} />*/}
+
     </tr>
   );
 }

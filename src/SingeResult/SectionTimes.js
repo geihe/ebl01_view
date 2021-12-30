@@ -46,21 +46,32 @@ const frames = [
     }
   },
   {
+    name: 'Examples',
+    frame1: {
+      id: f => f.id === 'MathCourse08',
+      include: false
+    },
+    frame2: {
+      id: f => f.component === 'Z',
+      include: false
+    }
+  },
+  {
     name: 'Pause',
     frame1: {
-      id: f => f.component === 'K',
+      id: f => f.component === 'Z',
       include: true
     },
     frame2: {
-      id: f => f.component === 'K',
+      id: f => f.component === 'Z',
       include: true
     }
   },
   {
     name: 'Posttest',
     frame1: {
-      id: f => f.id === 'Test_postMC_1',
-      include: true
+      id: f => f.component === 'pn',
+      include: false
     },
     frame2: {
       id: f => f.id === 'Test_postMC_7_draw3',
@@ -75,7 +86,7 @@ const frames = [
     },
     frame2: {
       id: f => f.id === 'Test_lw-rvt8',
-      include: false
+      include: true
     }
   },
 ]
@@ -84,7 +95,6 @@ export function SectionTimeList(prop) {
   const {row}=prop;
   const times=frames.map(f => ({name: f.name, time: sectionTime(row, f)}));
   const title=times.map(t=>`${t.name}: ${t.time}`).join('\n');
-
 
   return <td title={title}>{times[0].time}</td>
 }
@@ -95,10 +105,8 @@ function sectionTime(row, frames) {
 
   const frame1 = row.find(e => frameObject1.id(e));
   const frame2 = row.find(e => frameObject2.id(e));
-
   const timeString1 = frameObject1.include ? frame1?.startTime : frame1?.endTime;
   const timeString2 = frameObject2.include ? frame2?.endTime : frame2?.startTime;
-
   if (timeString1 && timeString2) {
     const start = new Date(getISO(timeString1));
     const end = new Date(getISO(timeString2));
